@@ -76,14 +76,18 @@ lcdForm.addEventListener('submit', (e) => {
         headers: {'ngrok-skip-browser-warning': 'true'},
         body: JSON.stringify({text: value})
     })
-    .then(response => response.json())
-    .then(_ => {
-        alert('Form submitted successfully!')
-        lcdInput.value = "";
+    .then(response => {
+        if (response.ok) {
+            lcdInput.value = '';
+            updateCharCount();
+            alert('Text sent successfully!');
+        } else {
+            console.error('Failed to send text');
+        }
     })
     .catch(error => {
-        alert('Form submission failed.', error)
-    })
+        alert('Failed to send text: ' + error.message);
+    });
 });
 
 
