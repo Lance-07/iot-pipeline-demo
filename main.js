@@ -6,8 +6,6 @@ const bucket = document.querySelector('.bucket');
 const lcdDisplay = document.querySelector('.lcd-display');
 const lcdTexts = document.querySelectorAll('.lcd-text');
 
-console.log(lcdTexts)
-
 const socket = io('https://sloth-meet-crayfish.ngrok-free.app',
     {
         cors: {origin: 'https://egorocku.github.io/html-page/home.html'},
@@ -19,9 +17,7 @@ socket.on('connect', () => {
     console.log('connected to the server')
 });
 
-
 lcdInput.setAttribute('size', lcdInput.getAttribute('placeholder').length);
-
 lcdInput.addEventListener("input", updateCharCount);
 
 function updateCharCount() {
@@ -40,7 +36,6 @@ ledButtons.forEach((button) => {
       } else {
         button.setAttribute("data-active", "true");
       }
-
       sendLEDData(ledData);
     });
 });
@@ -79,14 +74,6 @@ lcdForm.addEventListener('submit', (e) => {
         headers: {'ngrok-skip-browser-warning': 'true'},
         body: JSON.stringify({text: value})
     })
-    .then(response => {
-        if (response.ok) {
-            lcdInput.value = '';
-            updateCharCount();
-            alert('Text sent successfully!');
-        } else {
-            throw new Error('Failed to send text');
-        }
     .then(response => {
         if (response.ok) {
             lcdInput.value = '';
