@@ -212,3 +212,29 @@ input:focus {
         opacity: 1;
     }
 }
+
+/*  LCD Display */
+.lcd-display {
+    min-width: 330px;
+    padding: 16px;
+    background-color: green;
+    box-shadow: inset 2px 2px #FFFFFF40, inset -2px -2px #00000040;
+    height: 132px;
+}
+
+.lcd-display div {
+    background-color: #0a0a0a;
+    padding: 8px;
+    height: 100%;
+}
+
+.lcd-display ul {
+    background-color: rgb(132, 0, 255);
+    list-style: none;
+    padding: 4px;
+    height: 100%;
+}
+
+.lcd-display li {
+    color: #0a0a0a;
+}

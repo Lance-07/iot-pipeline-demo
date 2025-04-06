@@ -3,6 +3,10 @@ const charCount = document.querySelector('.char-count');
 const ledButtons = document.querySelectorAll('.led-button');
 const lcdForm = document.querySelector('.lcd-form');
 const bucket = document.querySelector('.bucket');
+const lcdDisplay = document.querySelector('.lcd-display');
+const lcdTexts = document.querySelectorAll('.lcd-text');
+
+console.log(lcdTexts)
 
 const socket = io('https://sloth-meet-crayfish.ngrok-free.app',
     {
@@ -31,8 +35,6 @@ ledButtons.forEach((button) => {
       let isActive = button.getAttribute("data-active") === "true";
       const ledData = button.getAttribute("data-led");
 
-      console.log(ledData);
-  
       if (isActive) {
         button.setAttribute("data-active", "false");
       } else {
@@ -53,6 +55,7 @@ function sendLEDData(data) {
 
 socket.on('water_status', (data)=>{
     let status = Number(data.split(': ')[1])
+
     if (status == 1){
         bucket.classList.remove('empty');
 
@@ -76,14 +79,31 @@ lcdForm.addEventListener('submit', (e) => {
         headers: {'ngrok-skip-browser-warning': 'true'},
         body: JSON.stringify({text: value})
     })
-    .then(response => response.json())
-    .then(_ => {
-        alert('Form submitted successfully!')
-        lcdInput.value = "";
+    .then(response => {
+        if (response.ok) {
+            lcdInput.value = '';
+            updateCharCount();
+            alert('Text sent successfully!');
+        } else {
+            throw new Error('Failed to send text');
+        }
     })
     .catch(error => {
-        alert('Form submission failed.', error)
-    })
+        alert('Failed to send text: ' + error.message);
+    });
+});
+
+socket.on('lcd-status', (data) => {
+    if (!Array.isArray(data)) return;
+
+    const limitedData = data.slice(-4);
+    while (limitedData.length < 4) {
+        limitedData.unshift('');
+    }
+
+    for (let i = 0; i < 4; i++) {
+        lcdTexts[3 - i].textContent = limitedData[i];
+    }
 });
 
 
