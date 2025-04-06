@@ -6,6 +6,8 @@ const bucket = document.querySelector('.bucket');
 const lcdDisplay = document.querySelector('.lcd-display');
 const lcdTexts = document.querySelectorAll('.lcd-text');
 
+console.log(lcdTexts)
+
 const socket = io('https://sloth-meet-crayfish.ngrok-free.app',
     {
         cors: {origin: 'https://egorocku.github.io/html-page/home.html'},
@@ -89,15 +91,15 @@ lcdForm.addEventListener('submit', (e) => {
 });
 
 socket.on('lcd-status', (data) => {
-    if (!Array.isArray(data)) return;
+    const texts = data['texts'];
 
-    const limitedData = data.slice(-4);
-    while (limitedData.length < 4) {
-        limitedData.unshift('');
-    }
+    console.log(texts)
+
+    if (!Array.isArray(texts)) return;
 
     for (let i = 0; i < 4; i++) {
-        lcdTexts[3 - i].textContent = limitedData[i];
+        const text = texts[3 - i] || '&nbsp;';
+        lcdTexts[3 - i].innerHTML = text;
     }
 });
 
