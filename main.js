@@ -87,6 +87,14 @@ lcdForm.addEventListener('submit', (e) => {
         } else {
             throw new Error('Failed to send text');
         }
+    .then(response => {
+        if (response.ok) {
+            lcdInput.value = '';
+            updateCharCount();
+            alert('Text sent successfully!');
+        } else {
+            throw new Error('Failed to send text');
+        }
     })
     .catch(error => {
         alert('Failed to send text: ' + error.message);
