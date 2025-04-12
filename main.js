@@ -8,9 +8,9 @@ const lcdTexts = document.querySelectorAll('.lcd-text');
 
 console.log(lcdTexts)
 
-const socket = io('https://sloth-meet-crayfish.ngrok-free.app',
+const socket = io('https://modern-snake-evenly.ngrok-free.app',
     {
-        cors: {origin: 'https://egorocku.github.io/html-page/home.html'},
+        cors: {origin: 'https://lance-07.github.io/iot-pipeline-demo'},
         extraHeaders: {"ngrok-skip-browser-warning": "true"}
     }
 );
@@ -43,7 +43,7 @@ ledButtons.forEach((button) => {
 });
 
 function sendLEDData(data) {
-    fetch('https://sloth-meet-crayfish.ngrok-free.app/led', {
+    fetch('https://modern-snake-evenly.ngrok-free.app/led', {
         method: 'POST',
         headers: {'ngrok-skip-browser-warning': 'true'},
         body: JSON.stringify({led: data})
@@ -71,7 +71,7 @@ lcdForm.addEventListener('submit', (e) => {
 
     const value = String(lcdInput.value.trim());
 
-    fetch('https://sloth-meet-crayfish.ngrok-free.app/text', {
+    fetch('https://modern-snake-evenly.ngrok-free.app/text', {
         method: 'POST',
         headers: {'ngrok-skip-browser-warning': 'true'},
         body: JSON.stringify({text: value})
